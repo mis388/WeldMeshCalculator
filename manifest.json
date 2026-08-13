@@ -2,16 +2,11 @@
     "name": "METFAB Weld Mesh Calculator",
     "short_name": "Mesh Weight",
     "description": "METFAB Weld Mesh Weight Calculator",
-
     "start_url": "/",
     "scope": "/",
-
     "display": "standalone",
-
-    "background_color": "#e9eef1",
-    "theme_color": "#0f9d76",
-
+    "background_color": "#EEF2F4",
+    "theme_color": "#0B3D5C",
     "orientation": "portrait",
-
     "icons": []
 }
