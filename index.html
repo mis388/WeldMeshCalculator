@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no">
+
+    <title>Weld Mesh Calculator</title>
+
+    <meta name="theme-color" content="#0f9d76">
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="topbar">
+
+        <img
+            src="metfab-logo.jpg"
+            class="logo"
+            alt="METFAB">
+
+        <div class="title-area">
+            <h1>Weld Mesh Calculator</h1>
+            <p>Theoretical Weight</p>
+        </div>
+
+    </header>
+
+
+    <main class="calculator">
+
+        <div class="input-row">
+            <label>Roll Length</label>
+
+            <input
+                type="number"
+                id="rollLength"
+                value="50"
+                step="any">
+
+            <span>ft</span>
+        </div>
+
+
+        <div class="input-row">
+            <label>Roll Width</label>
+
+            <input
+                type="number"
+                id="rollWidth"
+                value="4"
+                step="any">
+
+            <span>ft</span>
+        </div>
+
+
+        <div class="input-row">
+            <label>Wire Diameter</label>
+
+            <input
+                type="number"
+                id="wireDiameter"
+                value="3"
+                step="any">
+
+            <span>mm</span>
+        </div>
+
+
+        <div class="input-row">
+            <label>Line Pitch</label>
+
+            <input
+                type="number"
+                id="linePitch"
+                value="100"
+                step="any">
+
+            <span>mm</span>
+        </div>
+
+
+        <div class="input-row">
+            <label>Cross Pitch</label>
+
+            <input
+                type="number"
+                id="crossPitch"
+                value="100"
+                step="any">
+
+            <span>mm</span>
+        </div>
+
+
+        <button class="calculate-button">
+            CALCULATE
+        </button>
+
+
+        <section class="results">
+
+            <div class="result-row">
+                <span>Line Wires</span>
+                <strong id="resultLineWires">--</strong>
+            </div>
+
+            <div class="result-row">
+                <span>Cross Wires</span>
+                <strong id="resultCrossWires">--</strong>
+            </div>
+
+            <div class="result-main">
+                <span>Roll Weight</span>
+
+                <strong>
+                    <span id="resultRollWeight">--</span>
+                    <small>kg</small>
+                </strong>
+            </div>
+
+            <div class="result-row last">
+                <span>Weight / sqft</span>
+
+                <strong>
+                    <span id="resultKgPerSqft">--</span>
+                    <small>kg/sqft</small>
+                </strong>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        © METFAB / Aparna
+    </footer>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
