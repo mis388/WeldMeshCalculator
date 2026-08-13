@@ -89,6 +89,60 @@ calculateButton.addEventListener("click", function () {
     document.getElementById("resultKgPerSqft").textContent =
         kgPerSqft.toFixed(4);
 });
+function clearCalculator() {
+
+    // Clear all input fields
+    document.querySelectorAll(
+        'input[type="number"]'
+    ).forEach(function (input) {
+
+        input.value = "";
+
+    });
+
+
+    // Clear result values
+    const lineWires =
+        document.getElementById("lineWires");
+
+    const crossWires =
+        document.getElementById("crossWires");
+
+    const rollWeight =
+        document.getElementById("rollWeight");
+
+    const weightSqft =
+        document.getElementById("weightSqft");
+
+
+    if (lineWires) {
+        lineWires.textContent = "--";
+    }
+
+    if (crossWires) {
+        crossWires.textContent = "--";
+    }
+
+    if (rollWeight) {
+        rollWeight.textContent = "--";
+    }
+
+    if (weightSqft) {
+        weightSqft.textContent = "--";
+    }
+
+
+    // Put cursor directly into first input
+    const firstInput =
+        document.querySelector(
+            'input[type="number"]'
+        );
+
+    if (firstInput) {
+        firstInput.focus();
+    }
+
+}
 if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", async function () {
