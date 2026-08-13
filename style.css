@@ -313,3 +313,52 @@ footer {
         height: 48px;
     }
 }
+/* CALCULATE + CLEAR BUTTONS */
+
+.button-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 7px;
+    margin-top: 2px;
+}
+
+.calculate-button,
+.clear-button {
+    height: 43px;
+
+    border: 0;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+/* METFAB NAVY */
+
+.calculate-button {
+    width: 100%;
+    margin: 0;
+
+    background: #0B3D5C;
+    color: #FFFFFF;
+}
+
+.calculate-button:active {
+    background: #082F49;
+}
+
+
+/* CLEAR */
+
+.clear-button {
+    background: #E6EDF1;
+    color: #0B3D5C;
+
+    border: 1px solid #C5D2DA;
+}
+
+.clear-button:active {
+    background: #D6E1E7;
+}
