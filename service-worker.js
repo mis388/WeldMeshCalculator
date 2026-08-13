@@ -1,4 +1,4 @@
-const CACHE_NAME = "metfab-mesh-calculator-v5";
+const CACHE_NAME = "metfab-mesh-calculator-v6";
 
 const FILES_TO_CACHE = [
     "/",
@@ -13,6 +13,9 @@ const FILES_TO_CACHE = [
     "/icons/favicon-32.png"
 ];
 
+
+/* INSTALL NEW VERSION */
+
 self.addEventListener("install", function (event) {
 
     event.waitUntil(
@@ -22,9 +25,12 @@ self.addEventListener("install", function (event) {
             })
     );
 
+    // Activate new service worker immediately
     self.skipWaiting();
 });
 
+
+/* DELETE OLD CACHE */
 
 self.addEventListener("activate", function (event) {
 
@@ -37,6 +43,11 @@ self.addEventListener("activate", function (event) {
                 cacheNames.map(function (cacheName) {
 
                     if (cacheName !== CACHE_NAME) {
+                        console.log(
+                            "Deleting old cache:",
+                            cacheName
+                        );
+
                         return caches.delete(cacheName);
                     }
 
@@ -48,9 +59,12 @@ self.addEventListener("activate", function (event) {
 
     );
 
+    // Take control immediately
     self.clients.claim();
 });
 
+
+/* NETWORK FIRST FOR MAIN APP FILES */
 
 self.addEventListener("fetch", function (event) {
 
@@ -58,16 +72,92 @@ self.addEventListener("fetch", function (event) {
         return;
     }
 
+    const requestURL =
+        new URL(event.request.url);
+
+    const importantFiles = [
+        "/",
+        "/index.html",
+        "/style.css",
+        "/app.js",
+        "/manifest.json"
+    ];
+
+    if (
+        requestURL.origin === self.location.origin &&
+        importantFiles.includes(requestURL.pathname)
+    ) {
+
+        event.respondWith(
+
+            fetch(event.request)
+
+                .then(function (networkResponse) {
+
+                    const responseCopy =
+                        networkResponse.clone();
+
+                    caches.open(CACHE_NAME)
+                        .then(function (cache) {
+
+                            cache.put(
+                                event.request,
+                                responseCopy
+                            );
+
+                        });
+
+                    return networkResponse;
+
+                })
+
+                .catch(function () {
+
+                    return caches.match(
+                        event.request
+                    );
+
+                })
+
+        );
+
+        return;
+    }
+
+
+    /* CACHE FIRST FOR IMAGES / ICONS */
+
     event.respondWith(
 
         caches.match(event.request)
+
             .then(function (cachedResponse) {
 
                 if (cachedResponse) {
                     return cachedResponse;
                 }
 
-                return fetch(event.request);
+                return fetch(event.request)
+
+                    .then(function (networkResponse) {
+
+                        const responseCopy =
+                            networkResponse.clone();
+
+                        caches.open(CACHE_NAME)
+
+                            .then(function (cache) {
+
+                                cache.put(
+                                    event.request,
+                                    responseCopy
+                                );
+
+                            });
+
+                        return networkResponse;
+
+                    });
 
             })
 
