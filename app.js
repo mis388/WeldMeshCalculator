@@ -91,22 +91,94 @@ calculateButton.addEventListener("click", function () {
 });
 if ("serviceWorker" in navigator) {
 
-    window.addEventListener("load", function () {
+    window.addEventListener("load", async function () {
 
-        navigator.serviceWorker
-            .register("/service-worker.js")
+        try {
 
-            .then(function () {
-                console.log("METFAB offline mode ready.");
-            })
-
-            .catch(function (error) {
-                console.log(
-                    "Service worker error:",
-                    error
+            const registration =
+                await navigator.serviceWorker.register(
+                    "/service-worker.js"
                 );
-            });
+
+            console.log(
+                "METFAB offline mode ready."
+            );
+
+
+            /* CHECK FOR UPDATES */
+
+            registration.update();
+
+
+            /* NEW SERVICE WORKER FOUND */
+
+            registration.addEventListener(
+                "updatefound",
+                function () {
+
+                    const newWorker =
+                        registration.installing;
+
+                    if (!newWorker) {
+                        return;
+                    }
+
+                    newWorker.addEventListener(
+                        "statechange",
+                        function () {
+
+                            if (
+                                newWorker.state ===
+                                "installed"
+                            ) {
+
+                                console.log(
+                                    "New app version installed."
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Service worker error:",
+                error
+            );
+
+        }
 
     });
+
+
+    /* WHEN NEW VERSION TAKES CONTROL */
+
+    let refreshing = false;
+
+    navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        function () {
+
+            if (refreshing) {
+                return;
+            }
+
+            refreshing = true;
+
+            console.log(
+                "New version active. Reloading..."
+            );
+
+            window.location.reload();
+
+        }
+    );
 
 }
