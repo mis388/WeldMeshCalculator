@@ -91,14 +91,16 @@ calculateButton.addEventListener("click", function () {
 });
 if ("serviceWorker" in navigator) {
 
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
 
         navigator.serviceWorker
-            .register("./service-worker.js")
-            .then(function() {
-                console.log("Offline mode ready.");
+            .register("/service-worker.js")
+
+            .then(function () {
+                console.log("METFAB offline mode ready.");
             })
-            .catch(function(error) {
+
+            .catch(function (error) {
                 console.log(
                     "Service worker error:",
                     error
